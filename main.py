@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-page_url = "http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html"
-full_page = requests.get("http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html")
+
+page_url = input("Quelle URL voulez-vous scraper ?")
+full_page = requests.get(page_url)
 soup = BeautifulSoup(full_page.content, 'html.parser')
 
 page_html = full_page.text
@@ -30,11 +31,7 @@ product_description = soup.text
 
 liste_valeur_produit = soup.find_all("th")
 liste_info_produit = soup.find_all("td")
-'''
-dic_info_pdt = {"Valeur": liste_valeur_produit, "Information": liste_info_produit}
-for valeur in dic_info_pdt.values():
-    print(valeur)
-'''
+
 
 print(
     "Titre de la page :", page_title, "\n",
