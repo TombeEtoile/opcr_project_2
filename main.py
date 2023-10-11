@@ -34,7 +34,6 @@ for tag in soup.findAll('p'):
     description_all.append(tag.get_text())
 description = description_all[3]
 
-
 liste_valeur_produit = soup.find_all("th")
 liste_info_produit = soup.find_all("td")
 price_ttc = liste_info_produit[2].get_text()
