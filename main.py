@@ -1,14 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
 
-page_url = input("Quelle URL voulez-vous scraper ?")
-full_page = requests.get(page_url)
+url = input("Quelle URL voulez-vous scraper ?")
+full_page = requests.get(url)
 soup = BeautifulSoup(full_page.content, 'html.parser')
 
 page_html = full_page.text
-
-url = ["http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html"]
 
 page_title = soup.title.text
 title = [page_title]
@@ -17,26 +14,33 @@ page_h1 = soup.h1.text
 h1 = [page_h1]
 
 product_img = soup.find_all("img", alt=page_h1)
-product_img_src = []
+img_src = []
 for element in product_img:
-    product_img_src.append(element["src"])
+    img_src.append(element["src"])
 
 page_link = soup.find_all("a")
 page_link_list = []
 category_link_list = []
 for link in soup.find_all("a"):
     page_link_list.append(link.get("href"))
-link_match = [s for s in page_link_list if "category" in s]
+category = [s for s in page_link_list if "category" in s]
 
 class_rating = "star-rating Two"
-class_rating_tbl = class_rating.split()
+rating = class_rating.split()
 
-product_description = soup.text
-description = [product_description]
+news_content_section = soup.find('div', id="content_inner")
+description_all = []
+for tag in soup.findAll('p'):
+    description_all.append(tag.get_text())
+description = description_all[3]
+
 
 liste_valeur_produit = soup.find_all("th")
 liste_info_produit = soup.find_all("td")
-
+price_ttc = liste_info_produit[2].get_text()
+price_ht = liste_info_produit[3].get_text()
+upc = liste_info_produit[0].get_text()
+availability = liste_info_produit[5].get_text()
 
 #Test export en CSV
 """
@@ -66,10 +70,11 @@ liste_info_produit[5 --> nombre de produits en stocks]
 #Appeler les données
 print(
     "Titre de la page :", page_title, "\n",
-    "Url de l'image produit :", product_img_src, "\n",
-    "La catégorie est", link_match[0], " et la sous-catégorie est ", link_match[1], "\n",
-    "Nombre d'étoiles :", class_rating_tbl[1], "\n",
-    "Le nombre d'article(s) restant (", liste_valeur_produit[5].get_text(), ") est de :", liste_info_produit[5].get_text(), "\n",
-    "Le prix incluant les taxes (", liste_valeur_produit[2].get_text(), ") est de :", liste_info_produit[2].get_text(),
-    "et celui excluant les taxes (", liste_valeur_produit[3].get_text(), ") est de :", liste_info_produit[3].get_text(), "\n",
-    "L'", liste_valeur_produit[0].get_text(), "du produit est :", liste_info_produit[0].get_text())
+    "Url de l'image produit :", img_src, "\n",
+    "La catégorie est", category[0], " et la sous-catégorie est ", category[1], "\n",
+    "Nombre d'étoiles :", rating[1], "\n",
+    "Le nombre d'article(s) restant (", liste_valeur_produit[5].get_text(), ") est de :", availability, "\n",
+    "Le prix incluant les taxes (", liste_valeur_produit[2].get_text(), ") est de :", price_ttc,
+    "et celui excluant les taxes (", liste_valeur_produit[3].get_text(), ") est de :", price_ht, "\n",
+    "L'", liste_valeur_produit[0].get_text(), "du produit est :", upc, "\n",
+    "La description du produit est :", description)
