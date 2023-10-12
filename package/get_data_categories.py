@@ -1,14 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "http://books.toscrape.com/index.html"
-url_code = requests.get(url)
-soup = BeautifulSoup(url_code.content, 'html.parser')
 
-categories_soup = soup.find_all("ul", {"class": "nav nav-list"})
-categories_list = []
-for link in soup.find_all("a"):
-    categories_list.append(link.get("href"))
-    if
+def get_data_categories_fct():
 
-print(categories_list)
+    r = requests.get("http://books.toscrape.com/index.html")
+    soup = BeautifulSoup(r.content, "html.parser")
+    categories_link = []
+    categories_name = []
+
+    navbar = soup.find("ul", class_="nav nav-list")
+    categories_list = navbar.find_all("a", href_="")
+
+    print(categories_list)
+
+
+get_data_categories_fct()
