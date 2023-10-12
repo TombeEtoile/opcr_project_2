@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = input("Quelle URL voulez-vous scraper ?")
+url = "http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html"
 full_page = requests.get(url)
 soup = BeautifulSoup(full_page.content, 'html.parser')
 
