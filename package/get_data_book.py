@@ -29,5 +29,7 @@ def get_data_book():
     description = all_p[3].text
     class_name = soup.find("p", class_="star-rating")
 
+    return url, title, img, upc, ht, ttc, categorie, availability, description
 
-get_data_book()
+
+print(get_data_book())
