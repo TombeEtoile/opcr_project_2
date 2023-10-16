@@ -18,8 +18,8 @@ def get_books_from_categories():
 
     r = requests.get("http://books.toscrape.com/catalogue/category/books/fantasy_19/index.html")
     soup = BeautifulSoup(r.content, "html.parser")
-
     books = soup.find_all("li", class_="col-xs-6 col-sm-4 col-md-3 col-lg-3")
+
     for link in books:
         books_link = link.find_all_next("a")
         return books_link
