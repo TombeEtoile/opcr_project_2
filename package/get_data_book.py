@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 def get_data_book():
 
-    r = requests.get("http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html")
+    r = requests.get("https://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html")
     soup = BeautifulSoup(r.content, 'html.parser')
 
     product_information = []
