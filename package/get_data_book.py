@@ -16,7 +16,10 @@ def get_data_book():
 
     url = r.url
     title = soup.title.text.strip()
+
     img = soup.find("img", src_="")
+    img_url = img["src"]
+    valid_img_url = img_url.replace("../..", "https://books.toscrape.com/")
     product_information = soup.find_all("td")
     upc = product_information[0].text
     ht = product_information[2].text
@@ -27,9 +30,10 @@ def get_data_book():
     all_p = soup.find_all("p")
     availability = product_information[5].text
     description = all_p[3].text
-    class_name = soup.find("p", class_="star-rating")
-
-    return url, title, img, upc, ht, ttc, categorie, availability, description
+    class_name = soup.find("p", class_="star-rating Two")
+    class_rating = class_name["class"]
+    product_rating = class_rating[1]
+    return url, title, valid_img_url, upc, ht, ttc, categorie, availability, description, product_rating
 
 
 print(get_data_book())
