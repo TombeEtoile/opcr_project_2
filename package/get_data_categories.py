@@ -20,6 +20,7 @@ def get_data_categories_fct():
     for change in categories:
         valid_url = change.replace("catalogue", "https://books.toscrape.com/catalogue")
         all_valid_url.append(valid_url)
+
     del(all_valid_url[0])
 
     return all_valid_url
