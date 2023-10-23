@@ -33,7 +33,6 @@ while next_button is not None:
 
 
 
-
 """
 def scraping_page():
 
