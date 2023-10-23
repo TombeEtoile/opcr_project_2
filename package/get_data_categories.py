@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 def get_data_categories_fct():
 
+
     r = requests.get("https://books.toscrape.com/index.html")
     soup = BeautifulSoup(r.content, "html.parser")
 
