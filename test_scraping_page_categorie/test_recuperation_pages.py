@@ -30,6 +30,7 @@ while next_button is not None:
 
     print(next_url)
 
+# créer fonction + return pour avoir le résultat en une liste
 
 
 

@@ -34,7 +34,7 @@ def scrap_all_url():
     scrap_page()
 
 
-print(page_number[3])
+print(scrap_page())
 
 """
 for href in next_page:
