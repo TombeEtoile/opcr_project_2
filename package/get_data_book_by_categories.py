@@ -1,44 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-"""
-def scraping_pages():
-    # scraper url page 2
-
-    r = requests.get("https://books.toscrape.com/catalogue/category/books/fantasy_19/")
-    soup = BeautifulSoup(r.content, "html.parser")
-
-    url = r.url
-    link_list = []
-
-    next_page = soup.find("li", {"class": "next"})
-
-    for href in next_page:
-        link_page = href.attrs["href"]
-        link_list.append(url + link_page)
-
-    return link_list
-    
-
-def scrap_all_next_page():
-    # scraper toutes les pages "next"
-
-    r = requests.get(scrap_next_page())
-    soup = BeautifulSoup(r.content, "html.parser")
-
-    link_page = []
-
-    link = soup.find_all("a")
-
-    for href in link:
-        link_list = href.attrs["href"]
-        link_page.append("https://books.toscrape.com/catalogue/category/books/fantasy_19/" + link_list)
-
-    next_page = link_page[-1]
-
-    return next_page
-"""
-
 
 def scrap_pages():
 
