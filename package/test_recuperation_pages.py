@@ -10,6 +10,7 @@ headers = {
 }
 
 next_url = []
+test_url = []
 
 next_button = soup.find('li', class_='next')
 
@@ -24,11 +25,10 @@ while next_button is not None:
         link_page = href.attrs["href"]
         next_url.append(base_url + link_page)
 
-    while next_button is None:
+    if next_url == TypeError:
         break
 
     print(next_url)
-
 
 
 
