@@ -1,22 +1,32 @@
 import requests
 from bs4 import BeautifulSoup
 
+url_home = "https://books.toscrape.com/catalogue/category/books/nonfiction_13"
 
-def scrap_pages():
 
-    r = requests.get("https://books.toscrape.com/catalogue/category/books/fantasy_19/page-1.html")
+def scrap_page_number(url):
+    # scrap le nombre de page d'une catégorie
+
+    r = requests.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
 
     page_number = soup.find("li", {"class": "current"}).text.strip().split()
     max_page_str = page_number[3]
     max_page = int(max_page_str)
+
+    return max_page
+
+
+def url_adaptation(url):
+
     html = ".html"
+    page = "page-"
 
     urls = []
     min_page = 1
 
-    for i in range(max_page):
-        i = f"https://books.toscrape.com/catalogue/category/books/fantasy_19/page-{min_page}{html}"
+    for i in range(scrap_page_number(url)):
+        i = f"{url}{page}{min_page}{html}"
         min_page += 1
         urls.append(i)
 
@@ -24,7 +34,7 @@ def scrap_pages():
 
 
 def get_books_from_categories(url):
-    # scraper tous les livres d'une catégorie
+    # scraper tous les livres de la page 1 d'une catégorie
 
     r = requests.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
@@ -50,13 +60,13 @@ def get_books_from_categories(url):
     return all_valid_url
 
 
-def get_books_from_all_categories():
+def get_books_from_all_categories(url):
     # appel la fonction 2 et 3 pour scraper tous les livres de toutes les pages "next"
 
     all_books_url = []
 
-    pages = scrap_pages()
-    for page in pages:
+    pages = scrap_page_number(url)
+    for page in url_adaptation(url):
         get_books_from_categories(url=page)
         for book in get_books_from_categories(url=page):
             all_books_url.append(book)
