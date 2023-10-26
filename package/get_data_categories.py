@@ -31,3 +31,4 @@ def get_data_categories_fct(url):
     del(all_valid_url[0])
 
     return all_valid_url
+

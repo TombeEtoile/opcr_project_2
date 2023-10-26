@@ -52,6 +52,7 @@ def get_data_book(url):
 
 print(get_data_book())
 
+
 """
     return url, title, valid_img_url, upc, ht, ttc, categorie, availability, product_rating, description
 """
