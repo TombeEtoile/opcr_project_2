@@ -2,9 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_data_book(url):
+def get_data_book():
 
-    r = requests.get(url)
+    r = requests.get("https://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html")
     soup = BeautifulSoup(r.content, 'html.parser')
 
     product_information = []
@@ -48,11 +48,7 @@ def get_data_book(url):
     }
 
     return all_information
+    # return url, title, valid_img_url, upc, ht, ttc, categorie, availability, product_rating, description
 
 
-print(get_data_book())
-
-
-"""
-    return url, title, valid_img_url, upc, ht, ttc, categorie, availability, product_rating, description
-"""
+# print(get_data_book())

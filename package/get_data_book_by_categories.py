@@ -1,42 +1,43 @@
 import requests
 from bs4 import BeautifulSoup
 
-url_home = "https://books.toscrape.com/catalogue/category/books/nonfiction_13"
 
-
-def scrap_page_number(url):
+def scrap_page_number(url_cat):
     # scrap le nombre de page d'une catégorie
 
-    r = requests.get(url)
+    r = requests.get(url_cat)
     soup = BeautifulSoup(r.content, "html.parser")
 
-    page_number = soup.find("li", {"class": "current"}).text.strip().split()
-    max_page_str = page_number[3]
-    max_page = int(max_page_str)
-
-    return max_page
-
-
-def url_adaptation(url):
-
-    html = ".html"
-    page = "page-"
-
     urls = []
-    min_page = 1
 
-    for i in range(scrap_page_number(url)):
-        i = f"{url}{page}{min_page}{html}"
-        min_page += 1
+    try:
+        page_number = soup.find("li", {"class": "current"}).text.strip().split()
+
+        html = ".html"
+        page = "page-"
+        max_page_str = page_number[3]
+        max_page = int(max_page_str)
+        min_page = 1
+
+        for i in range(max_page):
+            i = f"{url_cat}{page}{min_page}{html}"
+            min_page += 1
+
+            urls.append(i)
+
+    except AttributeError:
+        index_html = "index.html"
+        i = f"{url_cat}{index_html}"
+
         urls.append(i)
 
     return urls
 
 
-def get_books_from_categories(url):
+def get_books_from_categories(url_page_1):
     # scraper tous les livres de la page 1 d'une catégorie
 
-    r = requests.get(url)
+    r = requests.get(url_page_1)
     soup = BeautifulSoup(r.content, "html.parser")
 
     all_links = []
@@ -60,19 +61,36 @@ def get_books_from_categories(url):
     return all_valid_url
 
 
-def get_books_from_all_categories(url):
+def get_books_from_all_categories(url_all_pages):
     # appel la fonction 2 et 3 pour scraper tous les livres de toutes les pages "next"
 
     all_books_url = []
 
-    pages = scrap_page_number(url)
-    for page in url_adaptation(url):
-        get_books_from_categories(url=page)
-        for book in get_books_from_categories(url=page):
+    # pages = scrap_page_number(url_cat=get_data_categories.dictionary_cat(url="https://books.toscrape.com"))
+    pages = scrap_page_number(url_all_pages)
+    for page in pages:
+        get_books_from_categories(url_page_1=page)
+        for book in get_books_from_categories(url_page_1=page):
             all_books_url.append(book)
 
     return all_books_url
 
 
-print(get_books_from_all_categories())
+def dictionary_books(url_all_pages):
 
+    list_books_name = []
+
+    for books in get_books_from_all_categories(url_all_pages):
+        url_split_1 = books.replace("https://books.toscrape.com/catalogue/", "")
+        url_split_2 = url_split_1.replace("/index.html", "")
+        list_books_name.append(url_split_2)
+
+    dict_books = {cle: valeur for cle, valeur in zip(list_books_name, get_books_from_all_categories(url_all_pages))}
+
+    return dict_books
+
+
+# print(scrap_page_number(url_cat="https://books.toscrape.com/catalogue/category/books/travel_2/"))
+# print(get_books_from_categories(url_page_1="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
+# print(get_books_from_all_categories(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
+# print(dictionary_books(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))

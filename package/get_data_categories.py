@@ -1,13 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
-url_home = "https://books.toscrape.com"
+r = requests.get("https://books.toscrape.com")
+soup = BeautifulSoup(r.content, "html.parser")
 
 
-def get_data_categories_fct(url):
-
-    r = requests.get(url_home)
-    soup = BeautifulSoup(r.content, "html.parser")
+def categories_url(url_home):
 
     categories = []
     all_invalid_url = []
@@ -32,3 +30,23 @@ def get_data_categories_fct(url):
 
     return all_valid_url
 
+
+def dictionary_cat(url_home):
+
+    cat_list = []
+
+    nav_bar = soup.find("div", class_="side_categories")
+    all_cat = nav_bar.find_all("a")
+    for cat_name in all_cat:
+        all_cat_name = cat_name.text.strip()
+        cat_list.append(all_cat_name)
+
+    del (cat_list[0])
+
+    dict_cat = {cle: valeur for cle, valeur in zip(cat_list, categories_url(url_home))}
+
+    return dict_cat
+
+
+# print(categories_url(url_home="https://books.toscrape.com"))
+# print(dictionary_cat(url_home="https://books.toscrape.com"))
