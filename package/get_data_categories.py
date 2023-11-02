@@ -48,5 +48,23 @@ def dictionary_cat(url_home):
     return dict_cat
 
 
+def cat_list(url_home):
+
+    cat_name_list = []
+
+    nav_bar = soup.find("div", class_="side_categories")
+    all_cat = nav_bar.find_all("a")
+    for cat_name in all_cat:
+        all_cat_name = cat_name.text.strip()
+        cat_name_list.append(all_cat_name)
+
+    del (cat_name_list[0])
+
+    return cat_name_list
+
+
+# print(cat_list(url_home="https://books.toscrape.com"))
 # print(categories_url(url_home="https://books.toscrape.com"))
 # print(dictionary_cat(url_home="https://books.toscrape.com"))
+
+
