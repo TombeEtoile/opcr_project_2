@@ -16,7 +16,9 @@ def get_data_book(url_book):
 
     url = r.url
     title = soup.title.text.strip()
-
+    url_split_1 = url.replace("https://books.toscrape.com/catalogue/", "")
+    url_split_2 = url_split_1.replace("/index.html", "")
+    name = url_split_2.replace("-", " ")
     img = soup.find("img", src_="")
     img_url = img["src"]
     valid_img_url = img_url.replace("../..", "https://books.toscrape.com/")
@@ -35,6 +37,7 @@ def get_data_book(url_book):
     product_rating = class_rating[1]
 
     all_information = {
+        "nom": name,
         "url": url,
         "title": title,
         "image produit": valid_img_url,
