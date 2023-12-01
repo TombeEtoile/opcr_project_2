@@ -32,20 +32,6 @@ if __name__ == "__main__":
             f.write(img_book)
             f.write('\n')
 
-    # print(test_all_info)
-    # print(book.get_data_book(url_book=books)["categorie parente"])
-
-            # test_dict_book_info = {cle: valeur for cle, valeur in zip(all_pages, all_info)}
-
-            # print(book.get_data_book(url_book=books))
-
-    # print(all_info.sort(key=itemgetter("categorie parente")))
-    # print(all_info[0]["categorie parente"])
-    # print(all_info[0])
-
-    # print(all_info[0]["image produit"])
-
-    """
     def write_data_to_csv(data, filename):
         with open(filename, 'w', newline='') as csv_file:
             fieldnames = data[0].keys()
@@ -65,4 +51,3 @@ if __name__ == "__main__":
     for category, data in grouped_data.items():
         filename = f'{category}.csv'
         write_data_to_csv(data, filename)
-"""
