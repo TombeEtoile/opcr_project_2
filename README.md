@@ -1,7 +1,7 @@
 Mise en place du projet :
 
 1. Création d'un environnement virtuel : 
-python2.7 -m venv nom_env_virtuel
+pip install python2.7
 
 2. Installation des packages : 
 pip install -r csv, 
