@@ -62,6 +62,7 @@ def cat_list(url_home):
 
     return cat_name_list
 
+
 # print(categories_url(url_home="https://books.toscrape.com"))
 # print(dictionary_cat(url_home="https://books.toscrape.com"))
 # print(cat_list(url_home="https://books.toscrape.com"))

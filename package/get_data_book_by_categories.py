@@ -2,10 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def scrap_page_number(url_cat):
+def scrap_page_number(url_all_pages):
     # scrap le nombre de page d'une catégorie
 
-    r = requests.get(url_cat)
+    r = requests.get(url_all_pages)
     soup = BeautifulSoup(r.content, "html.parser")
 
     urls = []
@@ -20,24 +20,24 @@ def scrap_page_number(url_cat):
         min_page = 1
 
         for i in range(max_page):
-            i = f"{url_cat}{page}{min_page}{html}"
+            i = f"{url_all_pages}{page}{min_page}{html}"
             min_page += 1
 
             urls.append(i)
 
     except AttributeError:
         index_html = "index.html"
-        i = f"{url_cat}{index_html}"
+        i = f"{url_all_pages}{index_html}"
 
         urls.append(i)
 
     return urls
 
 
-def get_books_from_categories(url_page_1):
+def get_books_from_categories(url_all_pages):
     # scraper tous les livres de la page 1 d'une catégorie
 
-    r = requests.get(url_page_1)
+    r = requests.get(url_all_pages)
     soup = BeautifulSoup(r.content, "html.parser")
 
     all_links = []
@@ -66,14 +66,20 @@ def get_books_from_all_categories(url_all_pages):
 
     all_books_url = []
 
-    # pages = scrap_page_number(url_cat=get_data_categories.dictionary_cat(url="https://books.toscrape.com"))
     pages = scrap_page_number(url_all_pages)
     for page in pages:
-        get_books_from_categories(url_page_1=page)
-        for book in get_books_from_categories(url_page_1=page):
+        get_books_from_categories(url_all_pages=page)
+        for book in get_books_from_categories(url_all_pages=page):
             all_books_url.append(book)
 
     return all_books_url
+
+
+# fausse_liste = ['https://books.toscrape.com/catalogue/category/books/travel_2/', 'https://books.toscrape.com/catalogue/category/books/mystery_3/', 'https://books.toscrape.com/catalogue/category/books/historical-fiction_4/']
+
+# print(scrap_page_number(url_all_pages="https://books.toscrape.com/catalogue/category/books/travel_2/"))
+# print(get_books_from_categories(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
+# print(get_books_from_all_categories(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
 
 
 def dictionary_books(url_all_pages):
@@ -103,8 +109,5 @@ def book_name(url_all_pages):
     return list_books_name2
 
 
-# print(scrap_page_number(url_cat="https://books.toscrape.com/catalogue/category/books/travel_2/index.html"))
-# print(get_books_from_categories(url_page_1="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
-# print(get_books_from_all_categories(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
 # print(dictionary_books(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
 # print(book_name(url_all_pages="https://books.toscrape.com/catalogue/category/books/fantasy_19/"))
