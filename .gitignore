@@ -1,0 +1,15 @@
+# Environnement virtuel
+/env
+/venv
+
+# Plugins IDE
+. pycharm/
+
+# Dossier pour csv
+/csv_files
+
+# Fichiers CSV
+*.csv
+
+# Images
+*.jpg
